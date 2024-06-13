@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://clientClaimDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="clientClaimDc"
+                  class="com.company.bstcrm.entity.ClientClaim">
+            <fetchPlan extends="_base">
+                <property name="client" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader/>
+        </instance>
+    </data>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <formLayout id="form" dataContainer="clientClaimDc" height="100%" width="100%">
+            <hbox id="clientHbox">
+                <vbox id="claimParams">
+                    <textField label="Наименование заявки" property="name" width="500px"/>
+                    <textArea label="Содержание" property="content" width="500px" height="600px"/>
+                </vbox>
+                <vbox id="clientParams">
+                    <textField label="Имя клиента" property="client.name" width="500px"/>
+                    <textField label="Контакты" property="client.contact" width="500px"/>
+                    <textField label="Конаткты сделки" property="contacts" width="500px"/>
+                    <comboBox label="Состояние сделки" property="clientClaimState"/>
+                    <hbox id="prices">
+                        <textField label="Себестоимость" width="240px"/>
+                        <textField label="Стоимость продажи" width="240px"/>
+                    </hbox>
+                </vbox>
+            </hbox>
+        </formLayout>
+            <hbox id="detailActions">
+                <button id="saveAndCloseBtn" action="saveAction"/>
+                <button id="closeBtn" action="closeAction"/>
+            </hbox>
+    </layout>
+</view>

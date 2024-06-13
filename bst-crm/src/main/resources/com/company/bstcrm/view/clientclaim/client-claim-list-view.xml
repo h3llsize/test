@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://clientClaimListView.title"
+      focusComponent="clientClaimsDataGrid">
+    <data>
+        <collection id="clientClaimsDc"
+                    class="com.company.bstcrm.entity.ClientClaim">
+            <fetchPlan extends="_base">
+                <property name="user">
+                    <property name="username"/>
+                </property>
+                <property name="client">
+                    <property name="name"/>
+                </property>
+            </fetchPlan>
+            <loader id="clientClaimsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from ClientClaim e where e.clientClaimState not like 'CANCELED']]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="clientClaimsDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createBtn" action="clientClaimsDataGrid.create"/>
+            <button id="editBtn" action="clientClaimsDataGrid.edit"/>
+            <button id="removeBtn" action="clientClaimsDataGrid.remove"/>
+            <simplePagination id="pagination" dataLoader="clientClaimsDl"/>
+        </hbox>
+        <dataGrid id="clientClaimsDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="clientClaimsDc"
+                  columnReorderingAllowed="true">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="name"/>
+                <column property="clientClaimState"/>
+                <column property="lastModifiedDate"/>
+                <column property="client.name"/>
+                <column property="content"/>
+                <column property="buyPrice"/>
+                <column property="sellPrice"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectBtn" action="selectAction"/>
+            <button id="discardBtn" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>

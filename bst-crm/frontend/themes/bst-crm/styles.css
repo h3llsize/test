@@ -1,0 +1,13 @@
+@import url('./bst-crm.css');
+
+vaadin-grid.styling::part(green) {
+    background-color: greenyellow;
+}
+
+vaadin-grid.styling::part(red) {
+    background-color: red;
+}
+
+vaadin-grid.styling::part(yellow) {
+    background-color: yellow;
+}
